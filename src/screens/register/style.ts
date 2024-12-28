@@ -24,7 +24,7 @@ export const Title = styled.Text`
 
 export const SubTitle = styled.Text`
   font-size: 17px;
-  margin-top: 42px;
+  margin-top: 40px;
   color: ${(props) => props.theme.colors.subText};
 `;
 

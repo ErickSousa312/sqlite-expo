@@ -1,5 +1,4 @@
 import { useThemeStyled } from "@/hooks/useThemed";
-import { RocketIcon } from "@/components/svgs/rocketIcon";
 import { CardsCustom } from "@/components/cards/card";
 import {
   Button,
@@ -16,14 +15,15 @@ import {
 import { ButtonBackNavigateCustom } from "@/components/buttons/backNavigate/buttonBackNavigate";
 import useAsyncStorageclass from "@/hooks/useAsyncStorageClass";
 import { darkTheme, lightTheme } from "@/constants/Colors";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useToast } from "@/contexts/Toast/ToastContext";
 import { router, useLocalSearchParams } from "expo-router";
 import { Entypo } from "@expo/vector-icons";
 import useAsyncStorageMember from "@/hooks/useAsyncStorageMember";
-import { Pressable } from "react-native";
+import { BackHandler, Pressable } from "react-native";
 import { CardsCustomMember } from "@/components/cards/cardMember";
 import ProfileIcon from "@/components/svgs/profileIcon";
+import { useAuthCustom } from "@/hooks/useAuth";
 
 export const MenberHandler = () => {
   const { title } = useLocalSearchParams<{ title: string }>();
@@ -43,7 +43,6 @@ export const MenberHandler = () => {
   return (
     <Container>
       <ButtonBackNavigateCustom />
-      <RocketIcon />
       <Title style={{ marginTop: 15 }}>{title}</Title>
       <SubTitle>adicione a galera e separe os times</SubTitle>
       <InputContainer>

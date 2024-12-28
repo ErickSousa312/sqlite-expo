@@ -17,6 +17,7 @@ const HorizonSvgComponent = ({
         width: width || "100%",
         height: height || "100%",
         paddingBottom: -10,
+        marginRight: 14,
       }}
     >
       {isDarkMode ? <HorizonSvgWhite /> : <HorizonSvgBlack></HorizonSvgBlack>}

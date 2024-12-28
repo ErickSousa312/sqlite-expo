@@ -11,7 +11,6 @@ import {
   SubTitle,
   Title,
 } from "./style";
-import { RocketIcon } from "@/components/svgs/rocketIcon";
 import { heightScreen } from "../../constants/DimensionScreen";
 import { CardsCustom } from "@/components/cards/card";
 import { useRouter } from "expo-router";
@@ -30,16 +29,12 @@ import {
 import horizonSvg from "../../components/svgs/horizoIcons/horizonSvg";
 import HorizonSvg from "../../components/svgs/horizoIcons/horizonSvg";
 import HorizonSvgComponent from "../../components/svgs/horizoIcons/horizonSvg";
-import SeparatorSvg from "@/components/svgs/separators/separatorSvgBlack";
 import SeparatorSvgWhite from "@/components/svgs/separators/separatorSvgWhite";
 import SeparatorSvgBlack from "@/components/svgs/separators/separatorSvgBlack";
-import { darkTheme, lightTheme } from "@/constants/Colors";
-import ProfileIcon from "@/components/svgs/profileIcon";
-import FontAwesome5 from "@expo/vector-icons/FontAwesome5";
-import Ionicons from "@expo/vector-icons/Ionicons";
 import { InputsAuth } from "@/components/auth/InputsAuth";
 import { RegisterButton } from "@/components/auth/RegisterButton";
 import { useAuthCustom } from "@/hooks/useAuth";
+import useBackHandler from "@/hooks/backHandler";
 
 export const HomeScreen = () => {
   const { isDarkMode } = useThemeStyled();
@@ -48,7 +43,6 @@ export const HomeScreen = () => {
   const [isPressedPassword, setIsPressedPassword] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-
   const { login, isAuthenticated } = useAuthCustom();
 
   const handleDismissKeyboard = () => {
@@ -59,31 +53,12 @@ export const HomeScreen = () => {
 
   const route = useRouter();
   console.log("isAuthenticated", isAuthenticated);
+  const { removeBackHandler } = useBackHandler();
 
   useEffect(() => {
     if (isAuthenticated) {
       route.push("/createClass");
     }
-    const backAction = () => {
-      Alert.alert("Confirmar saída", "Você tem certeza que quer sair?", [
-        {
-          text: "Cancelar",
-          onPress: () => null,
-          style: "cancel",
-        },
-        {
-          text: "Sim",
-          onPress: () => BackHandler.exitApp(), // Fecha o aplicativo se o usuário confirmar
-        },
-      ]);
-      return true; // Impede a navegação padrão
-    };
-
-    BackHandler.addEventListener("hardwareBackPress", backAction);
-
-    return () => {
-      BackHandler.removeEventListener("hardwareBackPress", backAction);
-    };
   }, [isAuthenticated]);
 
   return (
@@ -98,10 +73,20 @@ export const HomeScreen = () => {
             }}
           >
             <HorizonSvgComponent />
+            <Text
+              style={{
+                marginTop: -50,
+                paddingBottom: 30,
+                color: isDarkMode ? "#EFF3F7" : "#000",
+                fontSize: 20,
+              }}
+            >
+              Gestor de Produtos Digitais
+            </Text>
             {isDarkMode ? <SeparatorSvgWhite /> : <SeparatorSvgBlack />}
           </View>
 
-          <Title style={{ marginTop: 35 }}>Entrar</Title>
+          <Title style={{ marginTop: 45 }}>Entrar</Title>
           <SubTitle>Olá, bem-vindo ao HorizonMarketing.</SubTitle>
 
           <InputsAuth
@@ -120,7 +105,14 @@ export const HomeScreen = () => {
           <Button onPress={() => login(email, password)}>
             <ButtonText>Acessar</ButtonText>
           </Button>
-          <RegisterButton></RegisterButton>
+          <Pressable
+            onPress={() => {
+              console.log("entrou");
+              removeBackHandler();
+            }}
+          >
+            <RegisterButton routerPush="/register"></RegisterButton>
+          </Pressable>
         </>
       </Container>
     </TouchableWithoutFeedback>

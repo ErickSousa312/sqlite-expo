@@ -1,5 +1,4 @@
 import { useThemeStyled } from "@/hooks/useThemed";
-import { RocketIcon } from "@/components/svgs/rocketIcon";
 import { CardsCustom } from "@/components/cards/card";
 import {
   Button,
@@ -28,7 +27,6 @@ export const CreateClass = () => {
   const { logout } = useAuthCustom();
 
   useEffect(() => {
-    // Função que será chamada quando o botão de voltar for pressionado
     const backAction = () => {
       console.log("Botão de voltar pressionado");
       logout();
@@ -36,10 +34,8 @@ export const CreateClass = () => {
       return true;
     };
 
-    // Adiciona o ouvinte para o evento do botão de voltar
     BackHandler.addEventListener("hardwareBackPress", backAction);
 
-    // Cleanup: Remove o ouvinte quando o componente for desmontado
     return () => {
       BackHandler.removeEventListener("hardwareBackPress", backAction);
     };
@@ -61,22 +57,9 @@ export const CreateClass = () => {
           placeholder="Nome da turma"
         ></StyledInput>
       </InputContainer>
-      {/* <Button onPress={() => console.log(storedValue)}>
-        <ButtonText>recuperar dados</ButtonText>
-      </Button> */}
       <Button onPress={() => {}}>
         <ButtonText>Criar</ButtonText>
       </Button>
-      {/* <Button onPress={() => removeAllValues()}>
-        <ButtonText>Remover dados</ButtonText>
-      </Button> */}
-      {/* <Button
-        onPress={() =>
-          addToast({ message: "Turma criada com sucesso", type: "success" })
-        }
-      >
-        <ButtonText>{onError ? "true" : "false"}</ButtonText>
-      </Button> */}
     </Container>
   );
 };

@@ -76,6 +76,10 @@ function RootLayoutNav() {
                 name="createClass"
                 options={{ animation: "slide_from_right" }}
               />
+              <Stack.Screen
+                name="register"
+                options={{ animation: "slide_from_right" }}
+              />
             </Stack>
           </GestureHandlerRootView>
         </AuthProvideCustom>
