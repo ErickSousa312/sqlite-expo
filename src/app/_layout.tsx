@@ -73,7 +73,7 @@ function RootLayoutNav() {
                 options={{ animation: "slide_from_right" }}
               />
               <Stack.Screen
-                name="class/createClass"
+                name="createClass"
                 options={{ animation: "slide_from_right" }}
               />
             </Stack>

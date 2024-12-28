@@ -13,16 +13,37 @@ import {
 import { ButtonBackNavigateCustom } from "@/components/buttons/backNavigate/buttonBackNavigate";
 import useAsyncStorageclass from "@/hooks/useAsyncStorageClass";
 import { darkTheme, lightTheme } from "@/constants/Colors";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useToast } from "@/contexts/Toast/ToastContext";
 import CreateClassIcon from "@/components/svgs/createClassIcon";
+import { BackHandler } from "react-native";
+import { useRouter } from "expo-router";
+import { useAuthCustom } from "@/hooks/useAuth";
 
 export const CreateClass = () => {
   const { isDarkMode } = useThemeStyled();
   const [inputClass, setInputClass] = useState("");
   const { addToast } = useToast();
-  const { storedValue, saveValue, removeAllValues, onError, loadValue } =
-    useAsyncStorageclass("turma", []);
+  const router = useRouter();
+  const { logout } = useAuthCustom();
+
+  useEffect(() => {
+    // Função que será chamada quando o botão de voltar for pressionado
+    const backAction = () => {
+      console.log("Botão de voltar pressionado");
+      logout();
+      router.push("/");
+      return true;
+    };
+
+    // Adiciona o ouvinte para o evento do botão de voltar
+    BackHandler.addEventListener("hardwareBackPress", backAction);
+
+    // Cleanup: Remove o ouvinte quando o componente for desmontado
+    return () => {
+      BackHandler.removeEventListener("hardwareBackPress", backAction);
+    };
+  }, []);
 
   return (
     <Container>
@@ -43,11 +64,7 @@ export const CreateClass = () => {
       {/* <Button onPress={() => console.log(storedValue)}>
         <ButtonText>recuperar dados</ButtonText>
       </Button> */}
-      <Button
-        onPress={() => {
-          saveValue(inputClass);
-        }}
-      >
+      <Button onPress={() => {}}>
         <ButtonText>Criar</ButtonText>
       </Button>
       {/* <Button onPress={() => removeAllValues()}>

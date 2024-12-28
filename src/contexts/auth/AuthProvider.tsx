@@ -21,6 +21,11 @@ export const AuthProvideCustom = ({
   const router = useRouter();
   const { addToast } = useToast();
 
+  const logout = () => {
+    console.log("chamou o logout");
+    setIsAuthenticated(false);
+  };
+
   const login = async (userName: string, password: string) => {
     try {
       console.log(userName, password);
@@ -51,9 +56,6 @@ export const AuthProvideCustom = ({
         message: "Error com a conexão com o servidor",
       });
     }
-  };
-  const logout = () => {
-    console.log("tentou deslogar");
   };
 
   return (

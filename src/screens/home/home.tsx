@@ -18,6 +18,8 @@ import { useRouter } from "expo-router";
 import useAsyncStorageClass from "@/hooks/useAsyncStorageClass";
 import { useEffect, useRef, useState } from "react";
 import {
+  Alert,
+  BackHandler,
   Keyboard,
   Pressable,
   Text,
@@ -60,8 +62,28 @@ export const HomeScreen = () => {
 
   useEffect(() => {
     if (isAuthenticated) {
-      route.push("/class/createClass");
+      route.push("/createClass");
     }
+    const backAction = () => {
+      Alert.alert("Confirmar saída", "Você tem certeza que quer sair?", [
+        {
+          text: "Cancelar",
+          onPress: () => null,
+          style: "cancel",
+        },
+        {
+          text: "Sim",
+          onPress: () => BackHandler.exitApp(), // Fecha o aplicativo se o usuário confirmar
+        },
+      ]);
+      return true; // Impede a navegação padrão
+    };
+
+    BackHandler.addEventListener("hardwareBackPress", backAction);
+
+    return () => {
+      BackHandler.removeEventListener("hardwareBackPress", backAction);
+    };
   }, [isAuthenticated]);
 
   return (
