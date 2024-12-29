@@ -1,6 +1,5 @@
-import { CreateClass } from "@/screens/manager/Class/createClass";
-import { RegisterScreen } from "@/screens/register/register";
+import { VerifyAccountScreen } from "@/screens/verifyAccount/verifyAccount";
 
-export default function ClassManagerCreate() {
-  return <RegisterScreen></RegisterScreen>;
+export default function VerifyAccount() {
+  return <VerifyAccountScreen></VerifyAccountScreen>;
 }

@@ -13,7 +13,7 @@ import {
 } from "./style";
 import { heightScreen } from "../../constants/DimensionScreen";
 import { CardsCustom } from "@/components/cards/card";
-import { useRouter } from "expo-router";
+import { router, useRouter } from "expo-router";
 import useAsyncStorageClass from "@/hooks/useAsyncStorageClass";
 import { useEffect, useRef, useState } from "react";
 import {
@@ -35,6 +35,7 @@ import { InputsAuth } from "@/components/auth/InputsAuth";
 import { RegisterButton } from "@/components/auth/RegisterButton";
 import { useAuthCustom } from "@/hooks/useAuth";
 import useBackHandler from "@/hooks/backHandler";
+import VerifyAccount from "../../app/verifyAccount";
 
 export const HomeScreen = () => {
   const { isDarkMode } = useThemeStyled();
@@ -107,6 +108,14 @@ export const HomeScreen = () => {
             <ButtonText>Acessar</ButtonText>
           </Button>
           <RegisterButton routerPush="/register"></RegisterButton>
+          <Pressable
+            onPress={() => {
+              console.log("buttom cadastre-se");
+              router.push("/verifyAccount");
+            }}
+          >
+            <Text>VerifyAccount</Text>
+          </Pressable>
         </>
       </Container>
     </TouchableWithoutFeedback>
