@@ -87,8 +87,6 @@ export const VerifyAccountScreen = () => {
   };
 
   useEffect(() => {
-    AccountIsValid();
-
     const backAction = () => {
       console.log("Botão de voltar pressionado");
       logout();
