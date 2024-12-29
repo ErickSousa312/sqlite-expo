@@ -48,7 +48,7 @@ export const VerifyAccountScreen = () => {
       message: "Realizando cadastro...",
     });
 
-    const response = await Api.post(urls.register, {
+    const response = await Api.post(urls.validateAccount, {
       email: email,
       code: code,
     });
@@ -57,6 +57,7 @@ export const VerifyAccountScreen = () => {
         type: "success",
         message: "Ativação realizado com sucesso!",
       });
+      logout();
       setTimeout(() => {
         router.push("/");
       }, 2000);
@@ -81,7 +82,7 @@ export const VerifyAccountScreen = () => {
       console.log("conta ativa");
       router.push("/");
     } else {
-      console.log("conta inativa");
+      console.log("conta inativa varfy accontou componente");
     }
   };
 

@@ -36,6 +36,8 @@ import { RegisterButton } from "@/components/auth/RegisterButton";
 import { useAuthCustom } from "@/hooks/useAuth";
 import useBackHandler from "@/hooks/backHandler";
 import VerifyAccount from "../../app/verifyAccount";
+import Api from "@/services/Api";
+import urls from "@/services/urls";
 
 export const HomeScreen = () => {
   const { isDarkMode } = useThemeStyled();
@@ -55,9 +57,30 @@ export const HomeScreen = () => {
   const route = useRouter();
   const { removeBackHandler } = useBackHandler();
 
+  const AccountIsValid = async () => {
+    if (email) {
+      const response = await Api.post(urls.verifyIfAccountIsActive, {
+        email: email,
+      });
+      console.log(response.data);
+      if (response.status === 200) {
+        console.log("conta ativa");
+        router.push("/createClass");
+      } else {
+        console.log("conta inativa");
+        router.push({
+          pathname: "/verifyAccount",
+          params: {
+            email: email,
+          },
+        });
+      }
+    }
+  };
+
   useEffect(() => {
     if (isAuthenticated) {
-      route.push("/createClass");
+      AccountIsValid();
     }
   }, [isAuthenticated]);
 

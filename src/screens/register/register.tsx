@@ -57,7 +57,12 @@ export const RegisterScreen = () => {
         type: "success",
         message: "Cadastro realizado com sucesso!",
       });
-      router.push("/createClass");
+      router.push({
+        pathname: "/verifyAccount",
+        params: {
+          email,
+        },
+      });
     } else {
       addToast({
         type: "error",

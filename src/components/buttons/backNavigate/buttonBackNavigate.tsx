@@ -3,14 +3,20 @@ import { ContainerButtonBackNavigate, ButtonBack } from "./style";
 import AntDesign from "@expo/vector-icons/AntDesign";
 import { useThemeStyled } from "@/hooks/useThemed";
 import { useRouter } from "expo-router";
+import { useAuthCustom } from "@/hooks/useAuth";
 
 export const ButtonBackNavigateCustom = () => {
   const { isDarkMode } = useThemeStyled();
   const router = useRouter();
-
+  const { logout } = useAuthCustom();
   return (
     <ContainerButtonBackNavigate>
-      <ButtonBack onPress={() => router.push("/")}>
+      <ButtonBack
+        onPress={() => {
+          logout();
+          router.push("/");
+        }}
+      >
         {isDarkMode ? (
           <AntDesign
             style={{ marginLeft: 1 }}

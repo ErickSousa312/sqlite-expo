@@ -44,22 +44,7 @@ export const CreateClass = () => {
   return (
     <Container>
       <ButtonBackNavigateCustom />
-      <CreateClassIcon />
-      <Title style={{ marginTop: 15 }}>Nova Turma</Title>
-      <SubTitle>crie uma turma para adicionar pessoas</SubTitle>
-      <InputContainer>
-        <StyledInput
-          onChangeText={(text) => setInputClass(text)}
-          value={inputClass}
-          placeholderTextColor={
-            isDarkMode ? darkTheme.colors.text : lightTheme.colors.text
-          }
-          placeholder="Nome da turma"
-        ></StyledInput>
-      </InputContainer>
-      <Button onPress={() => {}}>
-        <ButtonText>Criar</ButtonText>
-      </Button>
+      <SubTitle>Screen Client</SubTitle>
     </Container>
   );
 };
