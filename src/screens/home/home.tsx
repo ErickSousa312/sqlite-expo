@@ -116,7 +116,7 @@ export const HomeScreen = () => {
 
           <Title style={{ marginTop: 45 }}>Entrar</Title>
           <SubTitle style={{ marginBottom: 30 }}>
-            Olá, bem-vindo ao HorizonMarketing.
+            Olá, bem-vindo ao Gestor de Produtos.
           </SubTitle>
 
           <InputsAuth
