@@ -52,7 +52,6 @@ export const HomeScreen = () => {
   };
 
   const route = useRouter();
-  console.log("isAuthenticated", isAuthenticated);
   const { removeBackHandler } = useBackHandler();
 
   useEffect(() => {
@@ -87,7 +86,9 @@ export const HomeScreen = () => {
           </View>
 
           <Title style={{ marginTop: 45 }}>Entrar</Title>
-          <SubTitle>Olá, bem-vindo ao HorizonMarketing.</SubTitle>
+          <SubTitle style={{ marginBottom: 30 }}>
+            Olá, bem-vindo ao HorizonMarketing.
+          </SubTitle>
 
           <InputsAuth
             email={email}
@@ -105,14 +106,7 @@ export const HomeScreen = () => {
           <Button onPress={() => login(email, password)}>
             <ButtonText>Acessar</ButtonText>
           </Button>
-          <Pressable
-            onPress={() => {
-              console.log("entrou");
-              removeBackHandler();
-            }}
-          >
-            <RegisterButton routerPush="/register"></RegisterButton>
-          </Pressable>
+          <RegisterButton routerPush="/register"></RegisterButton>
         </>
       </Container>
     </TouchableWithoutFeedback>

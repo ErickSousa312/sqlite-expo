@@ -13,6 +13,11 @@ import { useThemeStyled } from "@/hooks/useThemed";
 import HorizonSvgComponent from "@/components/svgs/horizoIcons/horizonSvg";
 import SeparatorSvgWhite from "@/components/svgs/separators/separatorSvgWhite";
 import SeparatorSvgBlack from "@/components/svgs/separators/separatorSvgBlack";
+import { InputsRegister } from "@/components/auth/inputsRegister";
+import { LoginButton } from "@/components/auth/LoginButton";
+import Api from "@/services/Api";
+import urls from "@/services/urls";
+import { useToast } from "@/contexts/Toast/ToastContext";
 
 export const RegisterScreen = () => {
   const { logout } = useAuthCustom();
@@ -20,14 +25,55 @@ export const RegisterScreen = () => {
   const [isShowPassword, setIsShowPassword] = useState(false);
   const [isPressedEmail, setIsPressedEmail] = useState(false);
   const [isPressedPassword, setIsPressedPassword] = useState(false);
+  const [isPressedNome, setIsPressedNome] = useState(false);
+  const [isPressedTelefone, setIsPressedTelefone] = useState(false);
+
+  const [nome, setNome] = useState("");
+  const [sobreNome, setSobreNome] = useState("");
   const [email, setEmail] = useState("");
+  const [telefone, setTelefone] = useState("");
   const [password, setPassword] = useState("");
 
+  const { addToast } = useToast();
+
+  console.log(nome, sobreNome, email, telefone, password);
+
+  const handerlSubmit = async () => {
+    console.log("submit");
+    addToast({
+      type: "loading",
+      message: "Realizando cadastro...",
+    });
+
+    const response = await Api.post(urls.register, {
+      nome,
+      sobrenome: sobreNome,
+      email,
+      telefone,
+      senha: password,
+    });
+    if (response.status === 201) {
+      addToast({
+        type: "success",
+        message: "Cadastro realizado com sucesso!",
+      });
+      router.push("/createClass");
+    } else {
+      addToast({
+        type: "error",
+        message: "Erro ao cadastrar",
+      });
+    }
+  };
+
   const handleDismissKeyboard = () => {
-    setIsPressedEmail(false);
-    setIsPressedPassword(false);
+    setFocusedInput(null);
     Keyboard.dismiss();
   };
+
+  const [focusedInput, setFocusedInput] = useState<
+    "input1" | "input2" | "input3" | "input4" | null
+  >(null);
 
   useEffect(() => {
     const backAction = () => {
@@ -68,12 +114,28 @@ export const RegisterScreen = () => {
             {isDarkMode ? <SeparatorSvgWhite /> : <SeparatorSvgBlack />}
           </View>
 
-          <Title style={{ marginTop: 45 }}>Cadastro</Title>
-          <SubTitle>Olá, bem-vindo ao HorizonMarketing.</SubTitle>
+          <Title style={{ marginTop: 45, marginBottom: 40 }}>Cadastro</Title>
+          <InputsRegister
+            nome={nome}
+            sobreNome={sobreNome}
+            email={email}
+            telefone={telefone}
+            password={password}
+            setNome={setNome}
+            setSobreNome={setSobreNome}
+            setEmail={setEmail}
+            setTelefone={setTelefone}
+            setPassword={setPassword}
+            isShowPassword={isShowPassword}
+            setIsShowPassword={setIsShowPassword}
+            focusedInput={focusedInput}
+            setFocusedInput={setFocusedInput}
+          ></InputsRegister>
 
-          <Button onPress={() => {}}>
-            <ButtonText>Acessar</ButtonText>
+          <Button onPress={() => handerlSubmit()}>
+            <ButtonText>Cadastrar</ButtonText>
           </Button>
+          <LoginButton></LoginButton>
         </>
       </Container>
     </TouchableWithoutFeedback>
