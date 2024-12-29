@@ -14,7 +14,6 @@ export const RegisterButton = ({ routerPush }: { routerPush?: string }) => {
       </Text>
       <Pressable
         onPress={() => {
-          console.log("buttom cadastre-se");
           router.push("/register");
         }}
       >

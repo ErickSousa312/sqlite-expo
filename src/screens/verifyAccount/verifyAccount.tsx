@@ -41,11 +41,44 @@ export const VerifyAccountScreen = () => {
 
   console.log(email, code);
 
+  const sendCodeVerify = async () => {
+    const response = await Api.post(urls.sendCodeVerify, {
+      email: email,
+    });
+    if (response.status === 200) {
+      addToast({
+        type: "success",
+        message: "Código enviado com sucesso!",
+      });
+    } else {
+      addToast({
+        type: "error",
+        message: "Erro ao enviar código!",
+      });
+    }
+  };
+  const resendCodeVerify = async () => {
+    const response = await Api.post(urls.sendCodeVerify, {
+      email: email,
+    });
+    if (response.status === 200) {
+      addToast({
+        type: "success",
+        message: "Código enviado com sucesso!",
+      });
+    } else {
+      addToast({
+        type: "error",
+        message: "Erro ao enviar código!",
+      });
+    }
+  };
+
   const handerlSubmit = async () => {
     console.log("submit");
     addToast({
       type: "loading",
-      message: "Realizando cadastro...",
+      message: "Verificando código...",
     });
 
     const response = await Api.post(urls.validateAccount, {
@@ -57,7 +90,7 @@ export const VerifyAccountScreen = () => {
         type: "success",
         message: "Ativação realizado com sucesso!",
       });
-      logout();
+      await logout();
       setTimeout(() => {
         router.push("/");
       }, 2000);
@@ -74,19 +107,8 @@ export const VerifyAccountScreen = () => {
     Keyboard.dismiss();
   };
 
-  const AccountIsValid = async () => {
-    const response = await Api.post(urls.verifyIfAccountIsActive, {
-      email: email,
-    });
-    if (response.status === 200) {
-      console.log("conta ativa");
-      router.push("/");
-    } else {
-      console.log("conta inativa varfy accontou componente");
-    }
-  };
-
   useEffect(() => {
+    sendCodeVerify();
     const backAction = () => {
       console.log("Botão de voltar pressionado");
       logout();
@@ -154,7 +176,7 @@ export const VerifyAccountScreen = () => {
           <Button onPress={() => handerlSubmit()}>
             <ButtonText>Verificar codigo</ButtonText>
           </Button>
-          <ResendCodeVerify></ResendCodeVerify>
+          <ResendCodeVerify email={email}></ResendCodeVerify>
         </>
       </Container>
     </TouchableWithoutFeedback>

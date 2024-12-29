@@ -166,7 +166,7 @@ export const InputsRegister = ({
           onFocus={() => setFocusedInput("input4")}
           onChangeText={(text) => setPassword(text)}
           value={password}
-          secureTextEntry={isShowPassword}
+          secureTextEntry={!isShowPassword}
           placeholderTextColor={
             isDarkMode ? darkTheme.colors.text : lightTheme.colors.text
           }
@@ -179,7 +179,7 @@ export const InputsRegister = ({
         >
           <Ionicons
             style={{}}
-            name={isShowPassword ? "eye" : "eye-off-sharp"}
+            name={isShowPassword ? "eye-off-sharp" : "eye"}
             size={25}
             color={isDarkMode ? "#EFF3F7" : "#000"}
           />

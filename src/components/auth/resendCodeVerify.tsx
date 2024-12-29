@@ -4,8 +4,16 @@ import { router, useRouter } from "expo-router";
 import { useRoute } from "@react-navigation/native";
 import useBackHandler from "@/hooks/backHandler";
 import { useToast } from "@/contexts/Toast/ToastContext";
+import Api from "@/services/Api";
+import urls from "@/services/urls";
 
-export const ResendCodeVerify = ({ routerPush }: { routerPush?: string }) => {
+export const ResendCodeVerify = ({
+  routerPush,
+  email,
+}: {
+  routerPush?: string;
+  email: string;
+}) => {
   const { isDarkMode } = useThemeStyled();
   const router = useRouter();
   const { addToast } = useToast();
@@ -15,12 +23,21 @@ export const ResendCodeVerify = ({ routerPush }: { routerPush?: string }) => {
         Não recebeu o código?
       </Text>
       <Pressable
-        onPress={() => {
+        onPress={async () => {
           addToast({
             type: "loading",
             message: "Código sendo reenviado...",
           });
-          console.log("buttom cadastre-se");
+          const response = await Api.post(urls.sendCodeVerify, {
+            email: email,
+          });
+          if (response.status !== 200) {
+            addToast({
+              type: "error",
+              message: "Erro ao reenviar código",
+            });
+            return;
+          }
           setTimeout(() => {
             addToast({
               type: "success",

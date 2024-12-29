@@ -4,6 +4,7 @@ const urls = {
   register: "/api/v1/user/register",
   validateAccount: "/api/v1/user/validateAccount",
   verifyIfAccountIsActive: "/api/v1/user/isValidateAccount",
+  sendCodeVerify: "/api/v1/user/sendCodeVerify",
 };
 
 export default urls;

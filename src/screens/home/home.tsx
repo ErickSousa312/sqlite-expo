@@ -62,7 +62,9 @@ export const HomeScreen = () => {
       const response = await Api.post(urls.verifyIfAccountIsActive, {
         email: email,
       });
+      console.log("--------------------response do verify account");
       console.log(response.data);
+      console.log("--------------------response do verify account");
       if (response.status === 200) {
         console.log("conta ativa");
         router.push("/createClass");
@@ -78,11 +80,14 @@ export const HomeScreen = () => {
     }
   };
 
-  useEffect(() => {
-    if (isAuthenticated) {
+  const handlerLogin = async () => {
+    const response = await login(email, password);
+    if (response) {
       AccountIsValid();
     }
-  }, [isAuthenticated]);
+  };
+
+  useEffect(() => {}, []);
 
   return (
     <TouchableWithoutFeedback onPress={handleDismissKeyboard}>
@@ -127,18 +132,18 @@ export const HomeScreen = () => {
             setIsShowPassword={setIsShowPassword}
           ></InputsAuth>
 
-          <Button onPress={() => login(email, password)}>
+          <Button onPress={() => handlerLogin()}>
             <ButtonText>Acessar</ButtonText>
           </Button>
           <RegisterButton routerPush="/register"></RegisterButton>
-          <Pressable
+          {/* <Pressable
             onPress={() => {
               console.log("buttom cadastre-se");
               router.push("/verifyAccount");
             }}
           >
             <Text>VerifyAccount</Text>
-          </Pressable>
+          </Pressable> */}
         </>
       </Container>
     </TouchableWithoutFeedback>

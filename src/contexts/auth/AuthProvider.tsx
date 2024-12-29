@@ -22,8 +22,15 @@ export const AuthProvideCustom = ({
   const { addToast } = useToast();
 
   const logout = () => {
-    console.log("chamou o logout");
-    setIsAuthenticated(false);
+    return new Promise((resolve, reject) => {
+      try {
+        console.log("chamou o logout");
+        setIsAuthenticated(false);
+        resolve("Logout bem-sucedido");
+      } catch (error) {
+        reject("Erro ao realizar logout: ");
+      }
+    });
   };
 
   const login = async (userName: string, password: string) => {
@@ -44,11 +51,13 @@ export const AuthProvideCustom = ({
         });
         setIsAuthenticated(true);
         setTokenState(response.data.token);
+        return true;
       } else {
         addToast({
           type: "error",
           message: "Credenciais inválidas, tente novamente...",
         });
+        return false;
       }
     } catch (error) {
       addToast({
