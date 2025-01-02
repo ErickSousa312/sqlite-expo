@@ -17,7 +17,6 @@ export const ThemeProviderStyled = ({
   return (
     <ProviderStyleComponents theme={isDarkMode ? darkTheme : lightTheme}>
       <ThemeContextStyle.Provider value={{ isDarkMode, toggleTheme }}>
-        <HeaderCustom />
         {children}
       </ThemeContextStyle.Provider>
     </ProviderStyleComponents>

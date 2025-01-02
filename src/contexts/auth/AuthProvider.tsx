@@ -71,7 +71,6 @@ export const AuthProvideCustom = ({
     <AuthContext.Provider
       value={{ isAuthenticated, user, token, login, logout }}
     >
-      <HeaderCustom />
       {children}
     </AuthContext.Provider>
   );
