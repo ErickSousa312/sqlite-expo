@@ -28,7 +28,7 @@ export const CardsProducts: React.FC<CardsCustomProps> = ({
         marginBottom: marginBottom ? marginBottom : 0,
       }}
     >
-      {data?.length === 0 ? ( // Verifica se o array está vazio
+      {data?.length === 0 ? (
         <Text2 style={{ textAlign: "center", fontSize: 15 }}>
           Ninguém chegou no evento ainda: Adicione participantes à sua lista de
           presença
