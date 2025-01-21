@@ -9,6 +9,8 @@ import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { ThemeProviderStyled } from "@/contexts/Theme/ThemeProvider";
 import { ToastProvider } from "@/contexts/Toast/ToastContext";
 import { AuthProvideCustom } from "@/contexts/auth/AuthProvider";
+import { SQLiteProvider } from "expo-sqlite";
+import { initializeDatabase } from "@/db/initializeDatabase";
 
 export {
   // Catch any errors thrown by the Layout component.
@@ -53,37 +55,39 @@ function RootLayoutNav() {
   console.log(path);
 
   return (
-    <ThemeProviderStyled>
-      <ToastProvider>
-        <AuthProvideCustom>
-          <GestureHandlerRootView>
-            <Stack
-              screenOptions={{
-                headerShown: false,
-                animationTypeForReplace: "push",
-              }}
-              initialRouteName={"index"}
-            >
-              <Stack.Screen
-                name="index"
-                options={{ animation: "slide_from_left" }}
-              />
-              <Stack.Screen
-                name="class/editClass"
-                options={{ animation: "slide_from_right" }}
-              />
-              <Stack.Screen
-                name="createClass"
-                options={{ animation: "slide_from_right" }}
-              />
-              <Stack.Screen
-                name="register"
-                options={{ animation: "slide_from_right" }}
-              />
-            </Stack>
-          </GestureHandlerRootView>
-        </AuthProvideCustom>
-      </ToastProvider>
-    </ThemeProviderStyled>
+    <SQLiteProvider databaseName="test.db" onInit={initializeDatabase}>
+      <ThemeProviderStyled>
+        <ToastProvider>
+          <AuthProvideCustom>
+            <GestureHandlerRootView>
+              <Stack
+                screenOptions={{
+                  headerShown: false,
+                  animationTypeForReplace: "push",
+                }}
+                initialRouteName={"index"}
+              >
+                <Stack.Screen
+                  name="index"
+                  options={{ animation: "slide_from_left" }}
+                />
+                <Stack.Screen
+                  name="class/editClass"
+                  options={{ animation: "slide_from_right" }}
+                />
+                <Stack.Screen
+                  name="createClass"
+                  options={{ animation: "slide_from_right" }}
+                />
+                <Stack.Screen
+                  name="register"
+                  options={{ animation: "slide_from_right" }}
+                />
+              </Stack>
+            </GestureHandlerRootView>
+          </AuthProvideCustom>
+        </ToastProvider>
+      </ThemeProviderStyled>
+    </SQLiteProvider>
   );
 }

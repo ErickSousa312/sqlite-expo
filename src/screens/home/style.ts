@@ -11,20 +11,26 @@ export interface HomeScreenProps {
 
 export const Container = styled.View`
   flex: 1;
-  padding-top: 20px;
   align-items: center;
   background-color: ${(props) => props.theme.colors.background};
 `;
 
 export const Title = styled.Text`
   font-size: 30px;
-  align-text-align: center;
+  align-text-align: left;
+  font-weight: bold;
+  color: ${(props) => props.theme.colors.text};
+`;
+export const Title2 = styled.Text`
+  font-size: 23px;
+  align-text-align: left;
+  font-weight: bold;
   color: ${(props) => props.theme.colors.text};
 `;
 
 export const SubTitle = styled.Text`
   font-size: 17px;
-  margin-top: 42px;
+  margin-bottom: 2px;
   color: ${(props) => props.theme.colors.subText};
 `;
 
@@ -43,7 +49,7 @@ export const ButtonText = styled.Text`
 `;
 
 export const StyledInput = styled.TextInput`
-  width: 88%;
+  width: 79%;
   height: 50px;
   padding: 15px;
   font-size: 16px;
@@ -56,7 +62,7 @@ export const IconContainer = styled.View`
   align-items: center;
   margin-top: 4px;
   padding-left: 18px;
-  width: 12%;
+  width: 8%;
   height: 43px;
   border-radius: 5px;
   z-index: 99;
@@ -74,7 +80,7 @@ export const ShowPassword = styled.Pressable`
 `;
 
 export const InputContainer = styled.Pressable`
-  width: 90%;
+  width: 92%;
   margin-bottom: 15px;
   flex-direction: row;
   border-radius: 8px;

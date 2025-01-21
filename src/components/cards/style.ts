@@ -18,8 +18,8 @@ export const IconExclude = styled(TouchableOpacity)`
 `;
 
 export const Text = styled.Text`
-  width: 80%;
+  width: 77%;
   color: ${(props) => props.theme.colors.buttonText};
   padding-left: 20px;
-  font-size: 20px;
+  font-size: 18px;
 `;

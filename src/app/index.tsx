@@ -21,34 +21,7 @@ export default function Home() {
   const platform = Platform.OS;
   const systemTheme = useColorScheme();
 
-  console.log(statusBarHeight);
-  console.log(platform);
-  console.log(systemTheme);
-
-  return (
-    <View
-      style={[
-        {
-          flex: 1,
-          paddingTop: platform === "ios" ? statusBarHeight + 6 : 0,
-          backgroundColor: systemTheme === "light" ? "#fff" : "#000",
-        },
-      ]}
-    >
-      <StatusBar
-        style={systemTheme === "light" ? "dark" : "light"}
-        backgroundColor={systemTheme === "light" ? "#fff" : "#000"}
-      />
-      <WebView
-        injectedJavaScript={disablePinchZoomScript}
-        javaScriptEnabled={true}
-        domStorageEnabled={true}
-        scalesPageToFit={false}
-        style={styles.container}
-        source={{ uri: "https://sushiexpresso.com.br/pedido-online" }}
-      />
-    </View>
-  );
+  return <HomeScreen></HomeScreen>;
 }
 const styles = StyleSheet.create({
   container: {

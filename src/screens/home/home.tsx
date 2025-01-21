@@ -10,6 +10,7 @@ import {
   StyledInput,
   SubTitle,
   Title,
+  Title2,
 } from "./style";
 import { heightScreen } from "../../constants/DimensionScreen";
 import { CardsCustom } from "@/components/cards/card";
@@ -38,56 +39,83 @@ import useBackHandler from "@/hooks/backHandler";
 import VerifyAccount from "../../app/verifyAccount";
 import Api from "@/services/Api";
 import urls from "@/services/urls";
+import { useToast } from "@/contexts/Toast/ToastContext";
+import { CardsProducts } from "@/components/cards/cardProducts";
+import {
+  ProductDatabase,
+  useProductDatabase,
+} from "../../db/useProductDatabase";
 
 export const HomeScreen = () => {
   const { isDarkMode } = useThemeStyled();
-  const [isShowPassword, setIsShowPassword] = useState(false);
-  const [isPressedEmail, setIsPressedEmail] = useState(false);
-  const [isPressedPassword, setIsPressedPassword] = useState(false);
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [isPressedNameProduct, setPressedname] = useState(false);
+  const [isPressedQuantity, setPressedQuantity] = useState(false);
+  const [dataProducts, setDataProducts] = useState<ProductDatabase[]>([]);
+  const [name, setName] = useState("");
+  const [quantity, setQuantity] = useState("");
   const { login, isAuthenticated } = useAuthCustom();
+  const { addToast } = useToast();
+  const { create, readAll, remove } = useProductDatabase();
 
   const handleDismissKeyboard = () => {
-    setIsPressedEmail(false);
-    setIsPressedPassword(false);
+    setPressedname(false);
+    setPressedQuantity(false);
     Keyboard.dismiss();
   };
 
   const route = useRouter();
   const { removeBackHandler } = useBackHandler();
 
-  const AccountIsValid = async () => {
-    if (email) {
-      const response = await Api.post(urls.verifyIfAccountIsActive, {
-        email: email,
-      });
-      console.log("--------------------response do verify account");
-      console.log(response.data);
-      console.log("--------------------response do verify account");
-      if (response.status === 200) {
-        console.log("conta ativa");
-        router.push("/createClass");
-      } else {
-        console.log("conta inativa");
-        router.push({
-          pathname: "/verifyAccount",
-          params: {
-            email: email,
-          },
-        });
+  const createProduct = async () => {
+    try {
+      if (Number(quantity) < 0) {
+        addToast({ type: "error", message: "Quantity must be greater than 0" });
       }
+      addToast({
+        type: "loading",
+        message: "Creating product...",
+      });
+      const result = await create({ name: name, quantity: Number(quantity) });
+      addToast({
+        type: "success",
+        message: "Product created successfully",
+      });
+      console.log("resulto do home", result);
+      setName("");
+      getData();
+    } catch (error) {
+      addToast({ type: "error", message: "Error creating product" });
+    }
+  };
+  const delectFunction = async (id: any) => {
+    try {
+      addToast({
+        type: "loading",
+        message: "Apagando participante...",
+      });
+      const result = await remove(id);
+      addToast({
+        type: "success",
+        message: "Participante foi removido com sucesso",
+      });
+      console.log("entrou aqui ");
+      console.log("resulto do home", result);
+      setName("");
+      getData();
+    } catch (error) {
+      addToast({ type: "error", message: "Erro ao remover o participante" });
     }
   };
 
-  const handlerLogin = async () => {
-    const response = await login(email, password);
-    if (response) {
-      AccountIsValid();
-    }
-  };
+  async function getData() {
+    const response = await readAll();
+    setDataProducts(response);
+    console.log("dados do response do banco de dados", response);
+  }
 
-  useEffect(() => {}, []);
+  useEffect(() => {
+    getData();
+  }, []);
 
   return (
     <TouchableWithoutFeedback onPress={handleDismissKeyboard}>
@@ -95,55 +123,53 @@ export const HomeScreen = () => {
         <>
           <View
             style={{
-              width: "60%",
-              height: 200,
-              alignItems: "center",
+              width: "100%",
+              paddingLeft: 20,
+              height: 100,
+              justifyContent: "center",
+              marginBottom: 20,
             }}
           >
-            <HorizonSvgComponent />
-            <Text
-              style={{
-                marginTop: -50,
-                paddingBottom: 30,
-                color: isDarkMode ? "#EFF3F7" : "#000",
-                fontSize: 20,
-              }}
-            >
-              Gestor de Produtos Digitais
-            </Text>
-            {isDarkMode ? <SeparatorSvgWhite /> : <SeparatorSvgBlack />}
+            <Title style={{ marginTop: 45 }}>Nome do Evento</Title>
+            <SubTitle style={{ marginBottom: 30 }}>
+              Sexta, 4 de novembro de 2022
+            </SubTitle>
           </View>
 
-          <Title style={{ marginTop: 45 }}>Entrar</Title>
-          <SubTitle style={{ marginBottom: 30 }}>
-            Olá, bem-vindo ao Gestor de Produtos.
-          </SubTitle>
-
           <InputsAuth
-            email={email}
-            password={password}
-            setEmail={setEmail}
-            setPassword={setPassword}
-            isPressedEmail={isPressedEmail}
-            setIsPressedEmail={setIsPressedEmail}
-            isPressedPassword={isPressedPassword}
-            setIsPressedPassword={setIsPressedPassword}
-            isShowPassword={isShowPassword}
-            setIsShowPassword={setIsShowPassword}
+            name={name}
+            quantity={quantity}
+            setName={setName}
+            setQuantity={setQuantity}
+            isPressedQuantity={isPressedQuantity}
+            setIsPressedName={setPressedname}
+            isPressedName={isPressedNameProduct}
+            addFunction={createProduct}
           ></InputsAuth>
-
-          <Button onPress={() => handlerLogin()}>
-            <ButtonText>Acessar</ButtonText>
-          </Button>
-          <RegisterButton routerPush="/register"></RegisterButton>
-          {/* <Pressable
-            onPress={() => {
-              console.log("buttom cadastre-se");
-              router.push("/verifyAccount");
+          <View
+            style={{
+              width: "100%",
+              paddingLeft: 20,
+              marginTop: 20,
+              justifyContent: "center",
+              marginBottom: 20,
             }}
           >
-            <Text>VerifyAccount</Text>
-          </Pressable> */}
+            <Title2 style={{}}>Participantes</Title2>
+          </View>
+
+          {/* <Button onPress={() => createProduct()}>
+            <ButtonText>Acessar</ButtonText>
+          </Button>
+          <Button onPress={() => getData()}>
+            <ButtonText>Acessar</ButtonText>
+          </Button>
+          <RegisterButton></RegisterButton> */}
+
+          <CardsProducts
+            excludeFunction={delectFunction}
+            data={dataProducts}
+          ></CardsProducts>
         </>
       </Container>
     </TouchableWithoutFeedback>

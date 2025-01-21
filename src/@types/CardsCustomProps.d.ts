@@ -9,4 +9,5 @@ export type CardsCustomProps = {
   Icon?: React.ElementType;
   onPress?: (value: any, teamNumber: "team1" | "team2") => Promise<void>;
   timeSelected?: "team1" | "team2";
+  excludeFunction: (item: any) => void;
 };
