@@ -13,13 +13,13 @@ const ExcludeIcon = (props: any) => (
       fillRule="evenodd"
       clipRule="evenodd"
       d="M10.607 23.335a.75.75 0 0 1 0-1.061l11.667-11.667a.75.75 0 1 1 1.06 1.06L11.667 23.334a.75.75 0 0 1-1.06 0"
-      fill="#F75A68"
+      fill="#ffff"
     />
     <Path
       fillRule="evenodd"
       clipRule="evenodd"
       d="M10.607 10.607a.75.75 0 0 1 1.06 0l11.667 11.667a.75.75 0 0 1-1.06 1.06L10.607 11.668a.75.75 0 0 1 0-1.06"
-      fill="#F75A68"
+      fill="#fff"
     />
   </Svg>
 );

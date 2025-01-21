@@ -49,7 +49,7 @@ export const ButtonText = styled.Text`
 `;
 
 export const StyledInput = styled.TextInput`
-  width: 79%;
+  width: 340;
   height: 50px;
   padding: 15px;
   font-size: 16px;
@@ -85,8 +85,7 @@ export const InputContainer = styled.Pressable`
   flex-direction: row;
   border-radius: 8px;
   color: ${(props) => props.theme.colors.text};
-  background-color: ${(props) => props.theme.colors.inputBackground};
-  border: 1px solid ${(props) => props.theme.colors.inputBorder};
+  background-color: #1f1e25;
 `;
 export const InputPassword = styled.View`
   width: 90%;

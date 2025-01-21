@@ -1,19 +1,8 @@
-// src/components/CardsCustom.tsx
 import { CardsCustomProps } from "@/@types/CardsCustomProps";
 import React from "react";
-import {
-  View,
-  ViewStyle,
-  StyleProp,
-  DimensionValue,
-  Alert,
-} from "react-native";
-import { ScrollView } from "react-native-gesture-handler";
-import { Text, ContainerCard, IconExclude } from "./style";
-import GroupIcon from "../svgs/groupIcon";
-import { useRouter } from "expo-router";
-import { PeopleType } from "@/@types/MemberType";
-import ExcludeIcon from "../svgs/excludeIcon";
+import { View, Alert, ScrollView } from "react-native";
+import { Text, ContainerCard, IconExclude, Text2 } from "./style";
+import AntDesign from "@expo/vector-icons/AntDesign";
 import { ProductDatabase } from "@/db/useProductDatabase";
 
 export const CardsProducts: React.FC<CardsCustomProps> = ({
@@ -39,31 +28,45 @@ export const CardsProducts: React.FC<CardsCustomProps> = ({
         marginBottom: marginBottom ? marginBottom : 0,
       }}
     >
-      {data?.map((item: ProductDatabase, index: number) => (
-        <ContainerCard key={index}>
-          {Icon ? <Icon /> : <GroupIcon></GroupIcon>}
-          <Text>{item.name}</Text>
-          <IconExclude
-            onPress={() => {
-              Alert.alert(
-                "Deseja remover o Participante", // Título
-                "O usuário vai ser removido permantemente", // Mensagem
-                [
-                  {
-                    text: "Cancelar",
-                    onPress: () => console.log("Cancel Pressed"),
-                    style: "cancel",
-                  },
-                  { text: "OK", onPress: () => excludeFunction(item.id) },
-                ],
-                { cancelable: false }, // O alerta pode ser ignorado clicando fora dele?
-              );
-            }}
-          >
-            <ExcludeIcon />
-          </IconExclude>
-        </ContainerCard>
-      ))}
+      {data?.length === 0 ? ( // Verifica se o array está vazio
+        <Text2 style={{ textAlign: "center", fontSize: 15 }}>
+          Ninguém chegou no evento ainda: Adicione participantes à sua lista de
+          presença
+        </Text2>
+      ) : (
+        data.map((item: ProductDatabase, index: number) => (
+          <ContainerCard key={index}>
+            <Text>{item.name}</Text>
+            <IconExclude
+              style={{
+                width: "14%",
+                height: "100%",
+                backgroundColor: "red",
+                justifyContent: "center",
+                alignItems: "center",
+                borderRadius: 7,
+              }}
+              onPress={() => {
+                Alert.alert(
+                  "Deseja remover o Participante", // Título
+                  "O usuário vai ser removido permantemente", // Mensagem
+                  [
+                    {
+                      text: "Cancelar",
+                      onPress: () => console.log("Cancel Pressed"),
+                      style: "cancel",
+                    },
+                    { text: "OK", onPress: () => excludeFunction(item.id) },
+                  ],
+                  { cancelable: false },
+                );
+              }}
+            >
+              <AntDesign name="minus" size={24} color="white" />
+            </IconExclude>
+          </ContainerCard>
+        ))
+      )}
     </ScrollView>
   );
 };

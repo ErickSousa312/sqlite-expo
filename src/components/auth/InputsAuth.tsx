@@ -41,9 +41,6 @@ export const InputsAuth = ({
           },
         ]}
       >
-        <IconContainer style={{}}>
-          <ProfileIcon></ProfileIcon>
-        </IconContainer>
         <StyledInput
           onBlur={() => console.log("pressed")}
           onPress={() => {
